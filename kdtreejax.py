@@ -399,45 +399,44 @@ key = random.PRNGKey(0)
 
 def test():
     K = 6
-    ndata = 611
-    ndim = 193610
+    ndata = 610
+    ndim = 193609
     #data =  10 * np.random.rand(ndata*ndim).reshape((ndim,ndata) )
-    #data = np.empty((ndim,ndata))
+    data = np.empty((ndim,ndata))
     #data = random.normal(key, (ndata,ndim))
     #data = np.random.rand(ndata*ndim).reshape((ndim,ndata))
-    data = []
-    # with open('/home/lordcocoro2004/maestria/Recuperaciondelainfo/ml-latest-small/ratings.csv', newline='') as File:  
-    #     reader = csv.reader(File)
-    #     for row in reader:
-    #         data[int(row[1])][int(row[0])]=float(row[2])
-    names = []
-    with open('/home/lordcocoro2004/maestria/Recuperaciondelainfo/ml-latest-small/movie_rating.csv', newline='') as File:  
+    #data = []
+    with open('/home/lordcocoro2004/ml-latest-small/ratings.csv', newline='') as File:  
         reader = csv.reader(File)
         for row in reader:
-            names = row[1:]
-            break
-        for row in reader:
-            data.append([0 if value=='' else int(value) for value in row[1:]])
-    data = np.array(data).transpose()
+            data[int(row[1])-1][int(row[0])-1]=float(row[2])
+    names = []
+    # with open('/home/lordcocoro2004/maestria/Recuperaciondelainfo/ml-latest-small/movie_rating.csv', newline='') as File:  
+    #     reader = csv.reader(File)
+    #     for row in reader:
+    #         names = row[1:]
+    #         break
+    #     for row in reader:
+    #         data.append([0 if value=='' else int(value) for value in row[1:]])
     
-    nor = normalizar(data)
-    mat = get_matrix(data)
-    res = coseno_2_knn_search(mat,nor)
-    #print(de_normalizar(data,res))
-    regular_data=de_normalizar(data,res)
-    regular_data = np.array(regular_data)
-    print(data[0])
+    # nor = normalizar(data)
+    # mat = get_matrix(data)
+    # res = coseno_2_knn_search(mat,nor)
+    # print(res)
+    # regular_data=de_normalizar(data,res)
+    # regular_data = np.array(regular_data)
+
     # print(regular_data[0])
-    print(names[0])
-    list_knn = knn_search_by_point(data.transpose(),data[0], K,p=2,d=0)
+    #print(names[0])
+    list_knn = knn_search_by_point(data.transpose(),data[0], K,p=1,d=1)
     for k in list_knn[0]:
-        print(k[0],'____',names[k[1]])
+       print(k[0],'____',k[1])
     #print(regular_data)
     
-    print(names[0])
-    list_knn_ = knn_search_by_point(regular_data.transpose(),regular_data[0], K,p=2,d=0)
-    for k in list_knn_[0]:
-        print(k[0],'____',names[k[1]])
+    #print(names[0])
+    # list_knn_ = knn_search_by_point(regular_data.transpose(),regular_data[0], K,p=2,d=0)
+    # for k in list_knn_[0]:
+    #    print(k[0],'____',k[1])
 
 
 if __name__ == '__main__':
